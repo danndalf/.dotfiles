@@ -8,7 +8,7 @@ Installation
 
 First, clone the repo to the new home folder
 
-	$ git clone git@github.com/danndalf/.dotfiles
+	$ git clone https://danndalf@github.com/danndalf/.dotfiles.git
 
 Next, link the freshly cloned dotlings into their new homes
 
@@ -36,6 +36,9 @@ Uninstallation
 Do the above in reverse:
 
 	$ ./.dotfiles/uninstall
+
+This will tell you if it had trouble restoring any backed up files.  You may need to handle some of those manualy.
+
 	$ rm -rf ~/.dotfiles
 
 Have fun!
