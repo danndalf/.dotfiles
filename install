@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+
+# This program installs all dotfiles present in the src/ directory.
+# It will skip any dotfiles already installed and backup anything it
+# would otherwise overwrite.
+#
+# Please see the github repository for full integration instructions:
+# http://github.com/danndalf/.dotfiles
+#
+# Author::		Dann Stayskal (mailto:dann@stayskal.com)
+# Copyright::	Copyright (c) 2011 by Dann Stayskal
+# License::		Distributes under the same terms as Ruby
+
+require 'fileutils'
+base_dir = ENV['HOME']+"/.dotfiles/"
+
+# Makes a backup of a dotfile from +target_node+ to the +backups+ directory
+def backup_dotfile(target_node, base_dir, node)
+	puts "Backing up "+target_node+" to "+base_dir+"backups/"
+	Dir.mkdir(base_dir+'backups') unless File.directory?(base_dir+'backups')
+	FileUtils.mv(target_node, base_dir+'backups/'+node)
+end
+
+# Installs a dotfile via symlink from +source_node+ to +target_node+
+def install_dotfile(source_node, target_node)
+	puts "Installing "+source_node
+	File.symlink(source_node, target_node)
+end
+
+# Installs all dotfiles present in the +src+ directory. For all dotfiles:
+#
+# * If the target is already a symlink to our source, we skip it.
+# * If the target is a file or directory, it is backed up to +backups+.
+# * Otherwise, the target is symlinked to our source.
+def install_dotfiles(base_dir)
+	Dir.entries(base_dir+'src').each do |node|
+		next if node.match(/^\.+$/)				### Don't try to symlink . or ..
+		source_node = base_dir+'src/'+node		### /home/you/.dotfiles/src/bashrc
+		target_node = ENV['HOME']+'/.'+node     ### /home/you/.bashrc
+		if File.file?(source_node) || File.directory?(source_node)
+			if File.symlink?(target_node)
+				if File.readlink(target_node) == source_node
+					puts "Skipping "+node+" (already installed)"
+				else
+					backup_dotfile(target_node, base_dir, node)
+					install_dotfile(source_node, target_node)
+				end
+			elsif File.file?(target_node) || File.directory?(target_node)
+				backup_dotfile(target_node, base_dir, node)
+				install_dotfile(source_node, target_node)
+			else
+				install_dotfile(source_node, target_node)
+			end	
+		end
+	end
+end
+
+install_dotfiles(base_dir)
+puts "done.\n"

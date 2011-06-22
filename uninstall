@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+
+# This program uninstalls Dann's .dotfiles present in the src/ directory.
+# It will remove anything previously installed and restore anything backed
+# up in the original installation process
+#
+# Please see the github repository for full integration instructions:
+# http://github.com/danndalf/.dotfiles
+#
+# Author::		Dann Stayskal (mailto:dann@stayskal.com)
+# Copyright::	Copyright (c) 2011 by Dann Stayskal
+# License::		Distributes under the same terms as Ruby
+
+require 'fileutils'
+base_dir = ENV['HOME']+"/.dotfiles/"
+
+# Makes a backup of a dotfile from +target_node+ to the +backups+ directory
+def restore_dotfile(target_node, base_dir, node)
+	puts "Restoring "+target_node+" from "+base_dir+"backups/"
+	FileUtils.mv(base_dir+'backups/'+node, target_node)
+end
+
+# Uninstalls a dotfile via removing symlink from +source_node+ to +target_node+
+def uninstall_dotfile(target_node)
+	puts "Removing "+target_node
+	File.unlink(target_node)
+end
+
+# Uninstalls all dotfiles present in the +src+ directory. For all dotfiles:
+#
+# * If the target is a symlink to the source, it removes the target
+# * If there is a backup present by the same name, it restores it.
+def uninstall_dotfiles(base_dir)
+	Dir.entries(base_dir+'src').each do |node|
+		next if node.match(/^\.+$/)				### Don't try to remove . or ..
+		source_node = base_dir+'src/'+node		### /home/you/.dotfiles/src/bashrc
+		target_node = ENV['HOME']+'/.'+node     ### /home/you/.bashrc
+		if File.file?(source_node) || File.directory?(source_node)
+			if File.symlink?(target_node)
+				if File.readlink(target_node) == source_node
+					uninstall_dotfile(target_node)
+				else
+					puts "Skipping "+target_node+" (source exists; target linked elsewhere)"
+				end
+			elsif File.file?(target_node) || File.directory?(target_node)
+				puts "Skipping "+target_node+" (target not a symlink)"
+			end	
+		end
+	end
+	Dir.entries(base_dir+'backups').each do |node|
+		next if node.match(/^\.+$/)				### Don't try to restore . or ..
+		source_node = base_dir+'backups/'+node	### /home/you/.dotfiles/backups/bashrc
+		target_node = ENV['HOME']+'/.'+node     ### /home/you/.bashrc
+		if File.file?(target_node) || File.directory?(target_node)
+			puts "Skipping "+target_node+" restore (target exists, not overwriting)"
+		else
+			restore_dotfile(target_node, base_dir, node)
+		end
+	end
+end
+
+uninstall_dotfiles(base_dir)
+puts "done.\n"
