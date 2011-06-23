@@ -7,10 +7,12 @@
 #
 # Author::    Dann Stayskal (mailto:dann@stayskal.com)
 # Copyright:: Copyright (c) 2011 by Dann Stayskal
-# License::   Distributes under the same terms as Ruby
+# License::   Distributed under the same terms as Ruby
 
 require 'fileutils'
 
+# Runs a comand, exiting with compatible status (and error logs)
+# on failure.  On success, simply returns with $? intact.
 def run_cmd(command)
 	message = `#{command} 2>&1`
 	if $?.to_i > 0 then
@@ -24,6 +26,7 @@ def run_cmd(command)
 	end
 end
 
+# Adds a dotfile to the dotfile registry.
 def add_dotfile(node) 
 
     if Dir.pwd != ENV['HOME'] then
