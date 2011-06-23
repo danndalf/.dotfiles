@@ -3,6 +3,13 @@ dot dot files
 
 Dann's dotfiles.  Make yourself at home.
 
+Prerequisites
+-------------
+
+Before setting this up, you'll really want to have git and RVM installed.  Git should be installed through whatever package manager yo're using, and RVM is installed with:
+
+	$ bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
+
 Installation
 ------------
 
@@ -19,7 +26,23 @@ This will go through and backup any existing dotfiles into `~/.dotfiles/backups`
 Maintenance
 -----------
 
-To update dotfiles, git pull and re-run `./.dotfiles/install` again.  That's it.
+Before making any changes to the dotfile collection on github, you'll need to setup your SSH keys to be able to read from the repository.  Once this is in place, change from the read-only HTTP url to the read/write GIT url with the following:
+
+	$ git remote set-url origin git://github.com/danndalf/.dotfiles.git
+
+Once this is in place, you can make any changes you like to the dotfile repository:
+
+To add a dotfile to this collection, run:
+
+	$ dotadd ~/.screenrc
+
+To remove a dotfile from this collection, run:
+
+	$ dotinfo ~/.screenrc
+
+To sync dotfiles with the github repo, run:
+
+	$ dotsync
 
 Documentation
 -------------
