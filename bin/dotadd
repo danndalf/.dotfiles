@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+
+# This program adds a dotfile to the dotfile repository.
+#
+# Please see the github repository for full integration instructions:
+# http://github.com/danndalf/.dotfiles
+#
+# Author::    Dann Stayskal (mailto:dann@stayskal.com)
+# Copyright:: Copyright (c) 2011 by Dann Stayskal
+# License::   Distributes under the same terms as Ruby
+
+require 'fileutils'
+
+def run_cmd(command)
+	message = `#{command} 2>&1`
+	if $?.to_i > 0 then
+	    puts "'#{command} returned a nonzero status: #{$?.to_i}"
+	    if message.length > 0 then
+	        puts "It had the following to tell you:"
+	        puts message
+	    end
+	    puts "Aborting."
+	    exit $?.to_i
+	end
+end
+
+def add_dotfile(node) 
+
+    if Dir.pwd != ENV['HOME'] then
+        puts "Cannot add a dotfile outside your home directory."
+        exit 1
+    end
+
+    base_dir = ENV['HOME']+"/.dotfiles/"
+    source_node = ENV['HOME']+'/'+node
+    target_node = base_dir+'src/'+node.gsub(/^\./,'')
+	
+	if File.exists?(target_node) then
+	    puts "Not overwriting "+target_node+"."
+	    exit 1
+	end
+	
+	puts "Moving "+source_node+" to "+target_node
+	FileUtils.mv(source_node, target_node)
+	
+	puts "Symlinking "+target_node+" back to "+source_node
+	File.symlink(target_node, source_node)
+	
+	puts "Adding "+target_node+" to .dotfiles version control"
+	Dir.chdir(base_dir)
+	run_cmd("git add #{target_node}")
+	run_cmd("git commit #{target_node} -m \"Adding #{node}\"")
+	run_cmd("git push origin master")
+	
+end
+
+if ARGV[0].nil?
+    puts "Usage: dotadd <dotfile>"
+    exit 1
+end
+
+add_dotfile(ARGV[0])
+puts "done.\n"
