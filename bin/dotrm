@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 #
-# This program removes a dotfile from the dotfile repository, restoring what was version controlled..
+# This program removes a dotfile from the dotfile repository, restoring what was version controlled.
 #
 # Please see the github repository for full integration instructions:
 # http://github.com/danndalf/.dotfiles
@@ -77,7 +77,7 @@ def rm_dotfile(node)
 end
 
 if ARGV[0].nil?
-    puts "Usage: dotadd <dotfile>"
+    puts "Usage: dotrm <dotfile>"
     exit 1
 end
 
