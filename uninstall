@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+#
 # This program uninstalls Dann's .dotfiles present in the src/ directory.
 # It will remove anything previously installed and restore anything backed
 # up in the original installation process
@@ -9,7 +10,20 @@
 #
 # Author::    Dann Stayskal (mailto:dann@stayskal.com)
 # Copyright:: Copyright (c) 2011 by Dann Stayskal
-# License::   Distributed under the same terms as Ruby
+# 
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 require 'fileutils'
 base_dir = ENV['HOME']+"/.dotfiles/"

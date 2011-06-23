@@ -1,20 +1,86 @@
-#[ OK dann@orz:~/.dotfiles {system} ( master )]
-#$ git rm src/rvmrc 
-#rm 'src/rvmrc'
+#!/usr/bin/env ruby
 
-#[ OK dann@orz:~/.dotfiles {system} ( master )]
-#$ git commit src/rvmrc -m "Removing .rvmrc"
-#[master ee102ac] Removing .rvmrc
-# 1 files changed, 0 insertions(+), 1 deletions(-)
-#  delete mode 100644 src/rvmrc
+#
+# This program removes a dotfile from the dotfile repository, restoring what was version controlled..
+#
+# Please see the github repository for full integration instructions:
+# http://github.com/danndalf/.dotfiles
+#
+# Author::    Dann Stayskal (mailto:dann@stayskal.com)
+# Copyright:: Copyright (c) 2011 by Dann Stayskal
+# License::   Distributed under the same terms as Ruby
+# 
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
-#  [ OK dann@orz:~/.dotfiles {system} ( master )]
-#  $ git push origin master
-#  Counting objects: 5, done.
-#  Delta compression using up to 4 threads.
-#  Compressing objects: 100% (3/3), done.
-#  Writing objects: 100% (3/3), 284 bytes, done.
-#  Total 3 (delta 2), reused 0 (delta 0)
- # To git@github.com:danndalf/.dotfiles
- #    ec8847a..ee102ac  master -> master
+require 'fileutils'
+
+# Runs a comand, exiting with compatible status (and error logs)
+# on failure.  On success, simply returns with $? intact.
+def run_cmd(command)
+	message = `#{command} 2>&1`
+	if $?.to_i > 0 then
+	    puts "'#{command} returned a nonzero status: #{$?.to_i}"
+	    if message.length > 0 then
+	        puts "It had the following to tell you:"
+	        puts message
+	    end
+	    puts "Aborting."
+	    exit $?.to_i
+	end
+end
+
+# Removes a dotfile from the dotfile registry, restoring what was version controlled.
+def rm_dotfile(node) 
+
+    if Dir.pwd != ENV['HOME'] then
+        puts "Cannot remove a dotfile outside your home directory."
+        exit 1
+    end
+
+    base_dir = ENV['HOME']+"/.dotfiles/"
+    source_node = ENV['HOME']+'/'+node
+    target_node = base_dir+'src/'+node.gsub(/^\./,'')
+
+	# Make sure source is our symlink (and not a file, dir, etc)
+	if File.symlink?(source_node)
+    	if File.readlink(source_node) != target_node
+    		puts "Source file #{source_node} is a symlink, but not in dotfile registry"	
+		end
+	else
+		puts "Source file #{source_node} is not in the dotfile registry"
+	end
+	
+	puts "Removing symlink at #{source_node}"
+	File.unlink(source_node)
+	
+	puts "Moving #{target_node} back to #{source_node}"
+	FileUtils.mv(target_node, source_node)
+
+	puts "Removing "+target_node+" from .dotfiles version control"
+	Dir.chdir(base_dir)
+	run_cmd("git rm -f #{target_node}")
+	run_cmd("git commit #{target_node} -m \"Removing #{node}\"")
+	run_cmd("git push origin master")
+
+end
+
+if ARGV[0].nil?
+    puts "Usage: dotadd <dotfile>"
+    exit 1
+end
+
+rm_dotfile(ARGV[0])
+puts "done.\n"
 
