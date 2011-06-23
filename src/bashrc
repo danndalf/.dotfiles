@@ -1,0 +1,91 @@
+#
+# .bashrc: executed by bash(1) for non-login shells.
+#
+
+# HISTORY: Don't add duplicate lines to history file, keep it short
+HISTCONTROL=ignoredups:ignorespace
+HISTSIZE=1000
+HISTFILESIZE=2000
+shopt -s histappend
+
+# DIMENSIONS: Update LINES and COLUMNS after each command if necessary
+shopt -s checkwinsize
+
+# LESS: Make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# COLORS: Determine whether we're live in technicolo(u)r
+if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	technicolor=rainbow
+
+	export CLICOLOR=1
+	export LSCOLORS=gxfxfxfxcxexexbxbxbxbx
+	COLOR_RED="\[\033[00;31m\]"
+	COLOR_GREEN="\[\033[00;32m\]"
+	COLOR_YELLOW="\[\033[00;33m\]"
+	COLOR_BLUE="\[\033[00;34m\]"
+	COLOR_PURPLE="\[\033[00;35m\]"
+	COLOR_CYAN="\[\033[00;36m\]"
+	COLOR_WHITE="\[\033[00m\]"
+
+else
+	# No, we prefer to trip the fuck out in old school black and white
+	technicolor=
+fi
+
+# ALIASES: 
+if [ -n "$technicolor" ]; then
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
+fi
+alias ll='ls -alF'
+alias l='ls -CF'
+alias ducks='du -cks * | sort -n'
+alias ducksh='du -cksh *'
+
+# TABS: Enable tab completion features if the host supports them
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+
+	### Tab-completion for SSH host aliases
+	complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh
+fi
+
+# PROMPT: Embeds git branch and RVM gemset in the prompt if it detects being in a codebase
+function git_branch {
+	git branch 2>/dev/null | awk -F'\*\ ' '{if($2)print "("$2")"}'
+}
+
+function rvm_gemset {
+	rvm current | awk '{print "{"$1"} "}'
+}
+
+function make_prompt {
+
+	EXITSTATUS="$?"
+
+	if [ "$EXITSTATUS" -eq "0" ] 
+	then
+		STATUS="${COLOR_GREEN}OK"
+	else
+		STATUS="${COLOR_RED}ERR ${EXITSTATUS}"
+	fi
+
+	if [[ `pwd` =~ '[Cc]odebases' ]]; then
+		PS1="\n${COLOR_YELLOW}[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_PURPLE}$(rvm_gemset)$(git_branch)${COLOR_YELLOW}]\n${COLOR_WHITE}\$ "
+		PS2=" > "
+	else
+		PS1="\n${COLOR_YELLOW}[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_YELLOW}]\n${COLOR_WHITE}\$ "
+		PS2=" > "
+	fi
+}
+
+PROMPT_COMMAND=make_prompt
+
+### PATH
+export PATH="/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts/bin:$HOME/.dotfiles/bin"
+
+### Ruby Version Manager
+[[ -s "/home/dann/.rvm/scripts/rvm" ]] && source "/home/dann/.rvm/scripts/rvm"
