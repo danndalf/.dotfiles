@@ -1,0 +1,20 @@
+#[ OK dann@orz:~/.dotfiles {system} ( master )]
+#$ git rm src/rvmrc 
+#rm 'src/rvmrc'
+
+#[ OK dann@orz:~/.dotfiles {system} ( master )]
+#$ git commit src/rvmrc -m "Removing .rvmrc"
+#[master ee102ac] Removing .rvmrc
+# 1 files changed, 0 insertions(+), 1 deletions(-)
+#  delete mode 100644 src/rvmrc
+
+#  [ OK dann@orz:~/.dotfiles {system} ( master )]
+#  $ git push origin master
+#  Counting objects: 5, done.
+#  Delta compression using up to 4 threads.
+#  Compressing objects: 100% (3/3), done.
+#  Writing objects: 100% (3/3), 284 bytes, done.
+#  Total 3 (delta 2), reused 0 (delta 0)
+ # To git@github.com:danndalf/.dotfiles
+ #    ec8847a..ee102ac  master -> master
+
