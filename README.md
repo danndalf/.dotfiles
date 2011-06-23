@@ -38,7 +38,7 @@ To add a dotfile to this collection, run:
 
 To push a change on a dotfile to the github repo, run:
 
-	$ dotupdate ~/.screenrc "
+	$ dotpush ~/.screenrc "here is a description of what I changed"
 
 To remove a dotfile from this collection, run:
 
@@ -46,7 +46,15 @@ To remove a dotfile from this collection, run:
 
 To sync dotfiles with the github repo, run:
 
-	$ dotsync
+	$ dotpull
+
+To see which files have local changes, run:
+
+	$ dotstat
+
+To see what's changed in a local tile, run:
+
+	$ dotdiff ~/.screenrc
 
 Documentation
 -------------
@@ -71,11 +79,12 @@ Have fun!
 TODO
 ----
 
-* Finish dotupdate
-* Finish dotsync
+* Finish dotpull
+* Finish dotstat
+* Finish dotdiff
 
 License
 -------
 
-Available under the same license as Ruby.
+.dotfiles is available under the GNU GPL, version 3.  Full details are in LICENSE.txt in this distribution.
 
