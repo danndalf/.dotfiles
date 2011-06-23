@@ -9,7 +9,7 @@
 #
 # Author::    Dann Stayskal (mailto:dann@stayskal.com)
 # Copyright:: Copyright (c) 2011 by Dann Stayskal
-# License::   Distributes under the same terms as Ruby
+# License::   Distributed under the same terms as Ruby
 
 require 'fileutils'
 base_dir = ENV['HOME']+"/.dotfiles/"
