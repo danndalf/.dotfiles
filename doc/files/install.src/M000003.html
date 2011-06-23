@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>install_dotfiles (install)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File install, line 49</span>
+49: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install_dotfiles</span>(<span class="ruby-identifier">base_dir</span>)
+50:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">base_dir</span><span class="ruby-operator">+</span><span class="ruby-value str">'src'</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+51:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/^\.+$/</span>)             <span class="ruby-comment cmt">### Don't try to symlink . or ..</span>
+52:         <span class="ruby-identifier">source_node</span> = <span class="ruby-identifier">base_dir</span><span class="ruby-operator">+</span><span class="ruby-value str">'src/'</span><span class="ruby-operator">+</span><span class="ruby-identifier">node</span>      <span class="ruby-comment cmt">### /home/you/.dotfiles/src/bashrc</span>
+53:         <span class="ruby-identifier">target_node</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'HOME'</span>]<span class="ruby-operator">+</span><span class="ruby-value str">'/.'</span><span class="ruby-operator">+</span><span class="ruby-identifier">node</span>     <span class="ruby-comment cmt">### /home/you/.bashrc</span>
+54:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">source_node</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">source_node</span>)
+55:             <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">symlink?</span>(<span class="ruby-identifier">target_node</span>)
+56:                 <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">readlink</span>(<span class="ruby-identifier">target_node</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">source_node</span>
+57:                     <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Skipping &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">node</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; (already installed)&quot;</span>
+58:                 <span class="ruby-keyword kw">else</span>
+59:                     <span class="ruby-identifier">backup_dotfile</span>(<span class="ruby-identifier">target_node</span>, <span class="ruby-identifier">base_dir</span>, <span class="ruby-identifier">node</span>)
+60:                     <span class="ruby-identifier">install_dotfile</span>(<span class="ruby-identifier">source_node</span>, <span class="ruby-identifier">target_node</span>)
+61:                 <span class="ruby-keyword kw">end</span>
+62:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">target_node</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">target_node</span>)
+63:                 <span class="ruby-identifier">backup_dotfile</span>(<span class="ruby-identifier">target_node</span>, <span class="ruby-identifier">base_dir</span>, <span class="ruby-identifier">node</span>)
+64:                 <span class="ruby-identifier">install_dotfile</span>(<span class="ruby-identifier">source_node</span>, <span class="ruby-identifier">target_node</span>)
+65:             <span class="ruby-keyword kw">else</span>
+66:                 <span class="ruby-identifier">install_dotfile</span>(<span class="ruby-identifier">source_node</span>, <span class="ruby-identifier">target_node</span>)
+67:             <span class="ruby-keyword kw">end</span>    
+68:         <span class="ruby-keyword kw">end</span>
+69:     <span class="ruby-keyword kw">end</span>
+70: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

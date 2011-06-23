@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>uninstall_dotfiles (uninstall)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File uninstall, line 47</span>
+47: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">uninstall_dotfiles</span>(<span class="ruby-identifier">base_dir</span>)
+48:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">base_dir</span><span class="ruby-operator">+</span><span class="ruby-value str">'src'</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+49:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/^\.+$/</span>)             <span class="ruby-comment cmt">### Don't try to remove . or ..</span>
+50:         <span class="ruby-identifier">source_node</span> = <span class="ruby-identifier">base_dir</span><span class="ruby-operator">+</span><span class="ruby-value str">'src/'</span><span class="ruby-operator">+</span><span class="ruby-identifier">node</span>      <span class="ruby-comment cmt">### /home/you/.dotfiles/src/bashrc</span>
+51:         <span class="ruby-identifier">target_node</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'HOME'</span>]<span class="ruby-operator">+</span><span class="ruby-value str">'/.'</span><span class="ruby-operator">+</span><span class="ruby-identifier">node</span>     <span class="ruby-comment cmt">### /home/you/.bashrc</span>
+52:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">source_node</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">source_node</span>)
+53:             <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">symlink?</span>(<span class="ruby-identifier">target_node</span>)
+54:                 <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">readlink</span>(<span class="ruby-identifier">target_node</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">source_node</span>
+55:                     <span class="ruby-identifier">uninstall_dotfile</span>(<span class="ruby-identifier">target_node</span>)
+56:                 <span class="ruby-keyword kw">else</span>
+57:                     <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Skipping &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">target_node</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; (source exists; target linked elsewhere)&quot;</span>
+58:                 <span class="ruby-keyword kw">end</span>
+59:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">target_node</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">target_node</span>)
+60:                 <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Skipping &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">target_node</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; (target not a symlink)&quot;</span>
+61:             <span class="ruby-keyword kw">end</span>    
+62:         <span class="ruby-keyword kw">end</span>
+63:     <span class="ruby-keyword kw">end</span>
+64:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">base_dir</span><span class="ruby-operator">+</span><span class="ruby-value str">'backups'</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+65:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/^\.+$/</span>)             <span class="ruby-comment cmt">### Don't try to restore . or ..</span>
+66:         <span class="ruby-identifier">source_node</span> = <span class="ruby-identifier">base_dir</span><span class="ruby-operator">+</span><span class="ruby-value str">'backups/'</span><span class="ruby-operator">+</span><span class="ruby-identifier">node</span>  <span class="ruby-comment cmt">### /home/you/.dotfiles/backups/bashrc</span>
+67:         <span class="ruby-identifier">target_node</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'HOME'</span>]<span class="ruby-operator">+</span><span class="ruby-value str">'/.'</span><span class="ruby-operator">+</span><span class="ruby-identifier">node</span>     <span class="ruby-comment cmt">### /home/you/.bashrc</span>
+68:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">target_node</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">target_node</span>)
+69:             <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Skipping &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">target_node</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; restore (target exists, not overwriting)&quot;</span>
+70:         <span class="ruby-keyword kw">else</span>
+71:             <span class="ruby-identifier">restore_dotfile</span>(<span class="ruby-identifier">target_node</span>, <span class="ruby-identifier">base_dir</span>, <span class="ruby-identifier">node</span>)
+72:         <span class="ruby-keyword kw">end</span>
+73:     <span class="ruby-keyword kw">end</span>
+74: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

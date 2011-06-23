@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>restore_dotfile (uninstall)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File uninstall, line 32</span>
+32: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">restore_dotfile</span>(<span class="ruby-identifier">target_node</span>, <span class="ruby-identifier">base_dir</span>, <span class="ruby-identifier">node</span>)
+33:     <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Restoring &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">target_node</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; from &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">base_dir</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;backups/&quot;</span>
+34:     <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">base_dir</span><span class="ruby-operator">+</span><span class="ruby-value str">'backups/'</span><span class="ruby-operator">+</span><span class="ruby-identifier">node</span>, <span class="ruby-identifier">target_node</span>)
+35: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
