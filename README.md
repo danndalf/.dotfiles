@@ -34,15 +34,15 @@ Once this is in place, you can make any changes you like to the dotfile reposito
 
 To add a dotfile to this collection, run:
 
-	$ dotadd ~/.screenrc
-
-To push a change on a dotfile to the github repo, run:
-
-	$ dotpush ~/.screenrc "here is a description of what I changed"
+	$ dotadd .screenrc
 
 To remove a dotfile from this collection, run:
 
-	$ dotrm ~/.screenrc
+	$ dotrm .screenrc
+
+To push a change on a dotfile to the github repo, run:
+
+	$ dotpush .screenrc "here is a description of what I changed"
 
 To sync dotfiles with the github repo, run:
 
@@ -54,7 +54,7 @@ To see which files have local changes, run:
 
 To see what's changed in a local tile, run:
 
-	$ dotdiff ~/.screenrc
+	$ dotdiff .screenrc
 
 Documentation
 -------------
@@ -75,12 +75,6 @@ This will tell you if it had trouble restoring any backed up files.  You may nee
 	$ rm -rf ~/.dotfiles
 
 Have fun!
-
-TODO
-----
-
-* Finish dotstat
-* Finish dotdiff
 
 License
 -------
