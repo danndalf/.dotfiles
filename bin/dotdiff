@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+#
+# This program reports on local changes to a dotfile to the dotfile repository.
+#
+# Please see the github repository for full integration instructions:
+# http://github.com/danndalf/.dotfiles
+#
+# Author::    Dann Stayskal (mailto:dann@stayskal.com)
+# Copyright:: Copyright (c) 2011 by Dann Stayskal
+# 
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+require 'fileutils'
+
+# Adds a dotfile to the dotfile registry.
+def diff_dotfile(node) 
+
+    base_dir = ENV['HOME']+"/.dotfiles/"
+    target_node = base_dir+'src/'+node.gsub(/^\./,'')
+	
+	Dir.chdir(base_dir)
+	message = `git diff #{target_node} 2>&1`
+	diff = message.split(/\n/).select{|l| l =~ /^[\+\-\@][^\+\-]/}.join("\n")
+	puts diff
+		
+end
+
+if ARGV[0].nil?
+    puts "Usage: dotdiff <dotfile>"
+    exit 1
+end
+
+diff_dotfile(ARGV[0])
