@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>File: dotpush</title>
+  <title>File: dotdiff</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
@@ -47,16 +47,16 @@
 
 
   <div id="fileHeader">
-    <h1>dotpush</h1>
+    <h1>dotdiff</h1>
     <table class="header-table">
     <tr class="top-aligned-row">
       <td><strong>Path:</strong></td>
-      <td>bin/dotpush
+      <td>bin/dotdiff
       </td>
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Fri Jun 24 11:08:25 -0700 2011</td>
+      <td>Fri Jun 24 11:35:37 -0700 2011</td>
     </tr>
     </table>
   </div>
@@ -70,7 +70,8 @@
 
     <div id="description">
       <p>
-This program pushes local dotfile changes to the repository
+This program reports on local changes to a dotfile to the dotfile
+repository.
 </p>
 <p>
 Please see the github repository for full integration instructions: <a
@@ -81,9 +82,6 @@ href="http://github.com/danndalf/.dotfiles">github.com/danndalf/.dotfiles</a>
 
 </td></tr>
 <tr><td valign="top">Copyright:</td><td>Copyright (c) 2011 by Dann Stayskal
-
-</td></tr>
-<tr><td valign="top">License:</td><td>Distributed under the same terms as Ruby
 
 </td></tr>
 </table>
@@ -118,8 +116,7 @@ href="http://github.com/danndalf/.dotfiles">github.com/danndalf/.dotfiles</a>
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000013">push_dotfile</a>&nbsp;&nbsp;
-      <a href="#M000012">run_cmd</a>&nbsp;&nbsp;
+      <a href="#M000009">diff_dotfile</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -141,37 +138,19 @@ href="http://github.com/danndalf/.dotfiles">github.com/danndalf/.dotfiles</a>
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000013" class="method-detail">
-        <a name="M000013"></a>
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
 
         <div class="method-heading">
-          <a href="dotpush.src/M000013.html" target="Code" class="method-signature"
-            onclick="popupCode('dotpush.src/M000013.html');return false;">
-          <span class="method-name">push_dotfile</span><span class="method-args">(node, message)</span>
+          <a href="dotdiff.src/M000009.html" target="Code" class="method-signature"
+            onclick="popupCode('dotdiff.src/M000009.html');return false;">
+          <span class="method-name">diff_dotfile</span><span class="method-args">(node)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Pushes a dotfile change to the registry
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000012" class="method-detail">
-        <a name="M000012"></a>
-
-        <div class="method-heading">
-          <a href="dotpush.src/M000012.html" target="Code" class="method-signature"
-            onclick="popupCode('dotpush.src/M000012.html');return false;">
-          <span class="method-name">run_cmd</span><span class="method-args">(command)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Runs a comand, exiting with compatible status (and error logs) on failure.
-On success, simply returns with $? intact.
+Adds a dotfile to the dotfile registry.
 </p>
         </div>
       </div>
