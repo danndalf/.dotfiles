@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>push_dotfile (bin/dotpush)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File bin/dotpush, line 45</span>
+45: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">push_dotfile</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">message</span>) 
+46: 
+47:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'HOME'</span>] <span class="ruby-keyword kw">then</span>
+48:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Cannot remove a dotfile outside your home directory.&quot;</span>
+49:         <span class="ruby-identifier">exit</span> <span class="ruby-value">1</span>
+50:     <span class="ruby-keyword kw">end</span>
+51: 
+52:     <span class="ruby-identifier">base_dir</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'HOME'</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;/.dotfiles/&quot;</span>
+53:     <span class="ruby-identifier">source_node</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'HOME'</span>]<span class="ruby-operator">+</span><span class="ruby-value str">'/'</span><span class="ruby-operator">+</span><span class="ruby-identifier">node</span>
+54:     <span class="ruby-identifier">target_node</span> = <span class="ruby-identifier">base_dir</span><span class="ruby-operator">+</span><span class="ruby-value str">'src/'</span><span class="ruby-operator">+</span><span class="ruby-identifier">node</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/^\./</span>,<span class="ruby-value str">''</span>)
+55: 
+56:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Source node: &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">source_node</span>
+57:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Target node: &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">target_node</span>
+58:         
+59:         <span class="ruby-comment cmt"># Make sure source is our symlink (and not a file, dir, etc)</span>
+60:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">symlink?</span>(<span class="ruby-identifier">source_node</span>)
+61:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">readlink</span>(<span class="ruby-identifier">source_node</span>) <span class="ruby-operator">!=</span> <span class="ruby-identifier">target_node</span>
+62:                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Source file #{source_node} is a symlink, but not in dotfile registry&quot;</span>       
+63:                 <span class="ruby-keyword kw">end</span>
+64:         <span class="ruby-keyword kw">else</span>
+65:                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Source file #{source_node} is not in the dotfile registry&quot;</span>
+66:         <span class="ruby-keyword kw">end</span>
+67:         
+68:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Pushing changes on &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">target_node</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; to .dotfiles repo&quot;</span>
+69:         <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">base_dir</span>)
+70:         <span class="ruby-identifier">run_cmd</span>(<span class="ruby-node">&quot;git commit #{target_node} -m \&quot;#{message}\&quot;&quot;</span>)
+71:         <span class="ruby-identifier">run_cmd</span>(<span class="ruby-value str">&quot;git push origin master&quot;</span>)
+72: 
+73: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
