@@ -29,7 +29,7 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 	COLOR_WHITE="\[\033[00m\]"
 
 else
-	# No, we prefer to trip the fuck out in old school black and white
+	# Actually, we prefer to trip the fuck out in old school black and white
 	technicolor=
 fi
 
