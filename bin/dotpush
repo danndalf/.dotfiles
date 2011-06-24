@@ -53,9 +53,6 @@ def push_dotfile(node, message)
     source_node = ENV['HOME']+'/'+node
     target_node = base_dir+'src/'+node.gsub(/^\./,'')
 
-	puts "Source node: "+source_node
-	puts "Target node: "+target_node
-	
 	# Make sure source is our symlink (and not a file, dir, etc)
 	if File.symlink?(source_node)
     	if File.readlink(source_node) != target_node
