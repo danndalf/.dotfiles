@@ -34,12 +34,14 @@ else
 fi
 
 # ALIASES: 
-#if [ -n "$technicolor" ]; then
-#    alias ls='ls --color=auto'
-#    alias grep='grep --color=auto'
-#    alias fgrep='fgrep --color=auto'
-#	alias egrep='egrep --color=auto'
-#fi
+if [ `uname` == 'Linux' ]; then
+	if [ -n "$technicolor" ]; then
+	    alias ls='ls --color=auto'
+	    alias grep='grep --color=auto'
+	    alias fgrep='fgrep --color=auto'
+		alias egrep='egrep --color=auto'
+	fi
+fi
 alias ll='ls -alF'
 alias l='ls -CF'
 alias ducks='du -cks * | sort -n'
