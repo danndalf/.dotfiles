@@ -79,7 +79,6 @@ Have fun!
 TODO
 ----
 
-* Finish dotpull
 * Finish dotstat
 * Finish dotdiff
 
