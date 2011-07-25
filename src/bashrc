@@ -91,3 +91,6 @@ export PATH="/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts/bin
 
 ### Ruby Version Manager
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+### Hack to make RVM work in OS X Lion
+cd .
