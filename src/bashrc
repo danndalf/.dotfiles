@@ -94,3 +94,9 @@ export PATH="/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts/bin
 
 ### Hack to make RVM work in OS X Lion
 cd .
+
+### Quick application of SSH keys to a new host
+apply_ssh() {
+	/usr/bin/ssh $1 "cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_dsa.pub
+}
+
