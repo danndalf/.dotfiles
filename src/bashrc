@@ -87,7 +87,7 @@ function make_prompt {
 PROMPT_COMMAND=make_prompt
 
 ### PATH
-export PATH="/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts/bin:$HOME/.dotfiles/bin"
+export PATH="/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts:$HOME/.dotfiles/bin"
 
 ### Ruby Version Manager
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
