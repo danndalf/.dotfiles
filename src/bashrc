@@ -89,11 +89,15 @@ PROMPT_COMMAND=make_prompt
 ### PATH
 export PATH="/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts:$HOME/.dotfiles/bin"
 
+### Hacks to make RVM work in OS X Lion
+OS=`uname`
+if [ "$OS" == "Darwin" ]; then
+	cd .
+	export CC=gcc-4.2
+fi
+
 ### Ruby Version Manager
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-### Hack to make RVM work in OS X Lion
-cd .
 
 ### Quick application of SSH keys to a new host
 apply_ssh() {
