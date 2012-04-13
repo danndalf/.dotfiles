@@ -64,12 +64,6 @@ function rvm_gemset {
 	rvm current | awk '{print "{gemset:"$1"} "}'
 }
 
-function get_keyset {
-  if [ -f ~/Scripts/keyset ]; then
-		~/Scripts/keyset | awk '{print "<id:"$1">"}'
-	fi
-}
-
 function make_prompt {
 
 	EXITSTATUS="$?"
@@ -82,10 +76,10 @@ function make_prompt {
 	fi
 
 	if [[ `pwd` =~ 'odebases' ]]; then
-		PS1="\n${COLOR_YELLOW}[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_PURPLE}$(get_keyset) ${COLOR_YELLOW}]\n[ ${COLOR_BLUE}$(rvm_gemset)(branch:$(git_branch))${COLOR_YELLOW} ]\n${COLOR_WHITE}\$ "
+		PS1="\n${COLOR_YELLOW}[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_YELLOW}]\n[ ${COLOR_BLUE}$(rvm_gemset)${COLOR_PURPLE}(branch:$(git_branch))${COLOR_YELLOW} ]\n${COLOR_WHITE}\$ "
 		PS2=" > "
 	else
-		PS1="\n${COLOR_YELLOW}[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_PURPLE}$(get_keyset)${COLOR_YELLOW}]\n${COLOR_WHITE}\$ "
+		PS1="\n${COLOR_YELLOW}[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_YELLOW}]\n${COLOR_WHITE}\$ "
 		PS2=" > "
 	fi
 }
