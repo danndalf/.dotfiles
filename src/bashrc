@@ -104,3 +104,10 @@ apply_ssh() {
 	/usr/bin/ssh $1 "mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chmod go-rwx ~/.ssh ~/.ssh/authorized_keys && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_dsa.pub
 }
 
+### Make Android SDK work from command line
+export ANDROID_SDK=/home/dann/Applications/android-sdk-linux
+export NDK=/opt/home/dann/Applications/android-ndk-r8b
+export ANDROID_NDK=$NDK
+export ANDROID_NATIVE_API_LEVEL=android-16
+export PATH=$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools
+
