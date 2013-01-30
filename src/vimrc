@@ -1,7 +1,6 @@
 set nu
 syntax on
 filetype indent on
-set autoindent
 set ic
 set lbr
 set background=dark
