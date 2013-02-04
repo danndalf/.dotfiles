@@ -61,7 +61,7 @@ function git_branch {
 }
 
 function rvm_gemset {
-	rvm current | awk '{print "{"$1"} "}'
+	rvm current | awk '{print "{gemset:"$1"} "}'
 }
 
 function make_prompt {
@@ -76,10 +76,10 @@ function make_prompt {
 	fi
 
 	if [[ `pwd` =~ 'odebases' ]]; then
-		PS1="\n${COLOR_YELLOW}[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_PURPLE}$(rvm_gemset)($(git_branch))${COLOR_YELLOW}]\n${COLOR_WHITE}\$ "
+		PS1="\n${COLOR_YELLOW}╭─[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_YELLOW}]\n├─${COLOR_YELLOW}[ ${COLOR_BLUE}$(rvm_gemset)${COLOR_PURPLE}(branch:$(git_branch))${COLOR_YELLOW} ]\n╰${COLOR_WHITE}\$ "
 		PS2=" > "
 	else
-		PS1="\n${COLOR_YELLOW}[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_YELLOW}]\n${COLOR_WHITE}\$ "
+		PS1="\n${COLOR_YELLOW}╭─[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_YELLOW}]\n╰${COLOR_WHITE}\$ "
 		PS2=" > "
 	fi
 }
@@ -101,8 +101,20 @@ fi
 
 ### Quick application of SSH keys to a new host
 apply_ssh() {
-	/usr/bin/ssh $1 "cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_dsa.pub
+	/usr/bin/ssh $1 "mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chmod go-rwx ~/.ssh ~/.ssh/authorized_keys && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_*.pub
 }
 
+<<<<<<< HEAD
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+=======
+### Make Android SDK work from command line
+export ANDROID_SDK=/home/dann/Applications/android-sdk-linux
+export NDK=/opt/home/dann/Applications/android-ndk-r8b
+export ANDROID_NDK=$NDK
+export ANDROID_NATIVE_API_LEVEL=android-16
+export PATH=$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools
+
+# mutt background fix
+COLORFGBG="default;default"
+>>>>>>> fb53d47a9cd29d69cca1d0e8ffc818213023a4d3

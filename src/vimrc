@@ -1,10 +1,9 @@
 set nu
 syntax on
 filetype indent on
-set autoindent
 set ic
 set lbr
 set background=dark
 colorscheme koehler
 set nocompatible
-set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab
