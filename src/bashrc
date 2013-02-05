@@ -46,6 +46,7 @@ alias ll='ls -alF'
 alias l='ls -CF'
 alias ducks='du -cks * | sort -n'
 alias ducksh='du -cksh *'
+alias update_gem_deps='git pull origin master && bundle update && git commit Gemfile Gemfile.lock -m "Updating gem dependencies" && git push origin master'
 
 # TABS: Enable tab completion features if the host supports them
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
@@ -76,10 +77,10 @@ function make_prompt {
 	fi
 
 	if [[ `pwd` =~ 'odebases' ]]; then
-		PS1="\n${COLOR_YELLOW}╭─[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_YELLOW}]\n├─${COLOR_YELLOW}[ ${COLOR_BLUE}$(rvm_gemset)${COLOR_PURPLE}(branch:$(git_branch))${COLOR_YELLOW} ]\n╰${COLOR_WHITE}\$ "
+		PS1="\n${COLOR_YELLOW}╭─[ ${STATUS} ${COLOR_CYAN}\u@\H:\w ${COLOR_YELLOW}]\n├─${COLOR_YELLOW}[ ${COLOR_BLUE}$(rvm_gemset)${COLOR_PURPLE}(branch:$(git_branch))${COLOR_YELLOW} ]\n╰${COLOR_WHITE}\$ "
 		PS2=" > "
 	else
-		PS1="\n${COLOR_YELLOW}╭─[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_YELLOW}]\n╰${COLOR_WHITE}\$ "
+		PS1="\n${COLOR_YELLOW}╭─[ ${STATUS} ${COLOR_CYAN}\u@\H:\w ${COLOR_YELLOW}]\n╰${COLOR_WHITE}\$ "
 		PS2=" > "
 	fi
 }
