@@ -3,17 +3,25 @@ dot dotfiles
 
 Dann's dotfiles.  Make yourself at home.
 
-Prerequisites
--------------
-
-Before setting this up, you'll really want to have git and RVM installed.  Git should be installed through whatever package manager you're using, and RVM is installed with:
-
-	$ bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
-
 Installation
 ------------
 
-First, clone the repo to the new home folder
+*Prerequisites*
+
+* [Git](http://git-scm.com/) for version control
+* [Curl](http://curl.haxx.se/) for HTTP network communication
+* [Ruby](http://ruby-lang.org/) for systems automation
+* [RVM](http://rvm.io/) for Ruby version builds and management
+
+Before setting this up, you'll really want to have the above tools installed. If using [Ubuntu Linux](http://ubuntu.org), the following command should get these lined up for you:
+
+	$ sudo apt-get install git curl ruby
+
+Next, RVM is installed with:
+
+	$ \curl -L https://get.rvm.io | bash -s stable --ruby
+
+Once you have RVM available, clone this repository into your new home folder
 
 	$ git clone https://danndalf@github.com/danndalf/.dotfiles.git
 
