@@ -1,4 +1,4 @@
-dot dot files
+dot dotfiles
 =============
 
 Dann's dotfiles.  Make yourself at home.
@@ -6,7 +6,7 @@ Dann's dotfiles.  Make yourself at home.
 Prerequisites
 -------------
 
-Before setting this up, you'll really want to have git and RVM installed.  Git should be installed through whatever package manager yo're using, and RVM is installed with:
+Before setting this up, you'll really want to have git and RVM installed.  Git should be installed through whatever package manager you're using, and RVM is installed with:
 
 	$ bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
 
