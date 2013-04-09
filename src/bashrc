@@ -46,7 +46,6 @@ alias ll='ls -alF'
 alias l='ls -CF'
 alias ducks='du -cks * | sort -n'
 alias ducksh='du -cksh *'
-alias update_gem_deps='git pull origin master && bundle update && git commit Gemfile Gemfile.lock -m "Updating gem dependencies" && git push origin master'
 
 # TABS: Enable tab completion features if the host supports them
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
@@ -56,17 +55,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 	complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh
 fi
 
-# PROMPT: Embeds git branch and RVM gemset in the prompt if it detects being in a codebase
-function git_branch {
-	git branch 2>/dev/null | cut -d\* -f 2 -s | cut -d\  -f 2
-}
-
-function rvm_gemset {
-	rvm current | awk '{print "{gemset:"$1"} "}'
-}
-
 function make_prompt {
-
 	EXITSTATUS="$?"
 
 	if [ "$EXITSTATUS" -eq "0" ] 
@@ -76,7 +65,7 @@ function make_prompt {
 		STATUS="${COLOR_RED}ERR ${EXITSTATUS}"
 	fi
 
-	PS1="\n[${STATUS} ${COLOR_CYAN}\u@\H:\w${COLOR_WHITE}]\n\$ "
+	PS1="\n[ ${STATUS} ${COLOR_CYAN}\u@\H:\w${COLOR_WHITE} ]\n\$ "
 	PS2=" > "
 }
 
