@@ -76,13 +76,8 @@ function make_prompt {
 		STATUS="${COLOR_RED}ERR ${EXITSTATUS}"
 	fi
 
-	if [[ `pwd` =~ 'odebases' ]]; then
-		PS1="\n${COLOR_YELLOW}╭─[ ${STATUS} ${COLOR_CYAN}\u@\H:\w ${COLOR_YELLOW}]\n├─${COLOR_YELLOW}[ ${COLOR_BLUE}$(rvm_gemset)${COLOR_PURPLE}(branch:$(git_branch))${COLOR_YELLOW} ]\n╰${COLOR_WHITE}\$ "
-		PS2=" > "
-	else
-		PS1="\n${COLOR_YELLOW}╭─[ ${STATUS} ${COLOR_CYAN}\u@\H:\w ${COLOR_YELLOW}]\n╰${COLOR_WHITE}\$ "
-		PS2=" > "
-	fi
+	PS1="\n[${STATUS} ${COLOR_CYAN}\u@\H:\w${COLOR_WHITE}]\n\$ "
+	PS2=" > "
 }
 
 PROMPT_COMMAND=make_prompt
@@ -116,9 +111,3 @@ export PATH=$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools
 
 # mutt background fix
 COLORFGBG="default;default"
-
-# MOTD
-if [ -f ~/.motd ];
-then
-	cat ~/.motd;
-fi
