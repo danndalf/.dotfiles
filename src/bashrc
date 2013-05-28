@@ -55,17 +55,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 	complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh
 fi
 
-# PROMPT: Embeds git branch and RVM gemset in the prompt if it detects being in a codebase
-function git_branch {
-	git branch 2>/dev/null | cut -d\* -f 2 -s | cut -d\  -f 2
-}
-
-function rvm_gemset {
-	rvm current | awk '{print "{gemset:"$1"} "}'
-}
-
 function make_prompt {
-
 	EXITSTATUS="$?"
 
 	if [ "$EXITSTATUS" -eq "0" ] 
@@ -75,13 +65,8 @@ function make_prompt {
 		STATUS="${COLOR_RED}ERR ${EXITSTATUS}"
 	fi
 
-	if [[ `pwd` =~ 'odebases' ]]; then
-		PS1="\n${COLOR_YELLOW}╭─[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_YELLOW}]\n├─${COLOR_YELLOW}[ ${COLOR_BLUE}$(rvm_gemset)${COLOR_PURPLE}(branch:$(git_branch))${COLOR_YELLOW} ]\n╰${COLOR_WHITE}\$ "
-		PS2=" > "
-	else
-		PS1="\n${COLOR_YELLOW}╭─[ ${STATUS} ${COLOR_CYAN}\u@\h:\w ${COLOR_YELLOW}]\n╰${COLOR_WHITE}\$ "
-		PS2=" > "
-	fi
+	PS1="\n[ ${STATUS} ${COLOR_CYAN}\u@\H:\w${COLOR_WHITE} ]\n\$ "
+	PS2=" > "
 }
 
 PROMPT_COMMAND=make_prompt
@@ -93,7 +78,9 @@ export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$H
 OS=`uname`
 if [ "$OS" == "Darwin" ]; then
 	cd .
-	export CC=gcc-4.2
+	export CC=/usr/bin/gcc-4.2
+	export DYLD_LIBRARY_PATH="/usr/local/mysql/lib:$DYLD_LIBRARY_PATH"
+
 fi
 
 ### Ruby Version Manager
