@@ -91,10 +91,8 @@ apply_ssh() {
 	/usr/bin/ssh $1 "mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chmod go-rwx ~/.ssh ~/.ssh/authorized_keys && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_*.pub
 }
 
-<<<<<<< HEAD
-
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-=======
+
 ### Make Android SDK work from command line
 export ANDROID_SDK=/home/dann/Applications/android-sdk-linux
 export NDK=/opt/home/dann/Applications/android-ndk-r8b
@@ -104,4 +102,3 @@ export PATH=$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools
 
 # mutt background fix
 COLORFGBG="default;default"
->>>>>>> fb53d47a9cd29d69cca1d0e8ffc818213023a4d3
