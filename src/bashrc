@@ -62,7 +62,7 @@ function make_prompt {
 PROMPT_COMMAND=make_prompt
 
 ### PATH
-export PATH="/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts:$HOME/.dotfiles/bin:$HOME/.rvm/bin:/usr/local/rvm/bin"
+export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts:$HOME/.dotfiles/bin:/usr/local/mysql/bin"
 
 ### Hacks to make RVM work in OS X Lion
 OS=`uname`
@@ -80,6 +80,8 @@ fi
 apply_ssh() {
 	/usr/bin/ssh $1 "mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chmod go-rwx ~/.ssh ~/.ssh/authorized_keys && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_*.pub
 }
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 ### Make Android SDK work from command line
 export ANDROID_SDK=/home/dann/Applications/android-sdk-linux
