@@ -55,7 +55,7 @@ function make_prompt {
 	else
 		STATUS="ERR $EXITSTATUS "
 	fi
-	PS1="${COLOR_WHITE}${STATUS}\u@\H:\w \$ "
+	PS1="${COLOR_WHITE}${STATUS}\u@\h:\w \$ "
 	PS2=" > "
 }
 
