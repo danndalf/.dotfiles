@@ -112,3 +112,10 @@ export ANDROID_NDK=$NDK
 export ANDROID_NATIVE_API_LEVEL=android-16
 export PATH=$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools
 
+### VAGRANT
+export VAGRANT_LOG=warn
+
+### POSTGRESQL
+export PATH=${PATH}:/usr/local/Cellar/postgresql/9.3.2/bin
+export DYLD_LIBRARY_PATH=/usr/local/Cellar/postgresql/9.3.2/lib:$DYLD_LIBRARY_PATH
+
