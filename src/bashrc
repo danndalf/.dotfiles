@@ -63,9 +63,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# Tab-completion for SSH host aliases
-[[ -s "$HOME/.ssh/config" ]] && complete -o default -o nospace -W "$(/bin/grep ^Host ~/.ssh/config | /bin/sed '/\*/d' | /usr/bin/awk '{print $2}')" scp sftp ssh
-
 ### PROMPT: A fancy prompt for fancy apes, for there are no fancier apes than we.
 function make_prompt {
 	
