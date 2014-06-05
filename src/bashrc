@@ -23,7 +23,28 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 
 	export CLICOLOR=1
 	export LSCOLORS=gxfxfxfxcxexexbxbxbxbx
-	COLOR_WHITE="\[\033[0;37m\]"
+
+	BLACK="\[\033[30m";
+	RED="\[\033[31m";
+	GREEN="\[\033[32m";
+	YELLOW="\[\033[33m";
+	BLUE="\[\033[34m";
+	MAGENTA="\[\033[35m";
+	CYAN="\[\033[36m";
+	WHITE="\[\033[37m";
+
+	BG_BLACK="\[\033[40m";
+	BG_RED="\[\033[41m";
+	BG_GREEN="\[\033[42m";
+	BG_YELLOW="\[\033[43m";
+	BG_BLUE="\[\033[44m";
+	BG_MAGENTA="\[\033[45m";
+	BG_CYAN="\[\033[46m";
+	BG_WHITE="\[\033[47m";
+
+	BOLD="\[\033[1m";
+	INVERSE="\[\033[7m";
+	RESET="\[\033[0m";
 
 else
 	technicolor=
@@ -34,56 +55,60 @@ if [ `uname` == 'Linux' ]; then
 	if [ -n "$technicolor" ]; then
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-		alias egrep='egrep --color=auto'
 	fi
 fi
 
 # TABS: Enable tab completion features if the host supports them
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
-
-	### Tab-completion for SSH host aliases
-	[[ -s "$HOME/.ssh/config" ]] && complete -o default -o nospace -W "$(/bin/grep ^Host ~/.ssh/config | /bin/sed '/\*/d' | /usr/bin/awk '{print $2}')" scp sftp ssh
 fi
 
+# Tab-completion for SSH host aliases
+[[ -s "$HOME/.ssh/config" ]] && complete -o default -o nospace -W "$(/bin/grep ^Host ~/.ssh/config | /bin/sed '/\*/d' | /usr/bin/awk '{print $2}')" scp sftp ssh
+
+### PROMPT: A fancy prompt for fancy apes, for there are no fancier apes than we.
 function make_prompt {
+	
+	### When root, show username and host in red
+	if [[ $EUID -ne 0 ]]; then
+		WARN="${WHITE}"
+	else
+		WARN="${RED}"
+	fi
+	
+	### Show if we ave a nonzero exit status from the previous command
 	EXITSTATUS="$?"
-	if [ "$EXITSTATUS" -eq "0" ] 
-	then
+	if [ "$EXITSTATUS" -eq "0" ]; then
 		STATUS=""
 	else
-		STATUS="ERR $EXITSTATUS "
+		STATUS="${RED}ERR $EXITSTATUS\n"
 	fi
-	PS1="${COLOR_WHITE}${STATUS}\u@\h:\w \$ "
-	PS2=" > "
+	
+	PS1="${STATUS}${WHITE}${WARN}\u@\h${WHITE}:${BLUE}\W ${RESET}\$ "
+	PS2="> "
 }
-
 PROMPT_COMMAND=make_prompt
 
-### PATH
-export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts:$HOME/.dotfiles/bin:/usr/local/mysql/bin"
+### PATH: The path that can be traversed is not the eternal path.
+export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts:$HOME/.dotfiles/bin:/usr/local/mysql/bin:$HOME/.rvm/bin"
 
-### Hacks to make RVM work in OS X Lion
+### RVM: Ruby Version Manager
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+### RVM + OSX: Various hacks to make RVM work in OS X 10.8+
 OS=`uname`
 if [ "$OS" == "Darwin" ]; then
 	cd .
 	export CC=/usr/bin/gcc-4.2
 	export DYLD_LIBRARY_PATH="/usr/local/mysql/lib:$DYLD_LIBRARY_PATH"
-
 fi
 
-### Ruby Version Manager
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-### Quick application of SSH keys to a new host
+### SSH: Quick application of SSH keys to a new host
 apply_ssh() {
 	/usr/bin/ssh $1 "mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chmod go-rwx ~/.ssh ~/.ssh/authorized_keys && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_*.pub
 }
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
-### Make Android SDK work from command line
+### ANDROID: Make Android SDK work from command line
 export ANDROID_SDK=/home/dann/Applications/android-sdk-linux
 export NDK=/opt/home/dann/Applications/android-ndk-r8b
 export ANDROID_NDK=$NDK
