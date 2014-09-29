@@ -87,7 +87,7 @@ function make_prompt {
 PROMPT_COMMAND=make_prompt
 
 ### PATH: The path that can be traversed is not the eternal path.
-export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts:$HOME/.dotfiles/bin:/usr/local/mysql/bin:$HOME/.rvm/bin"
+export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts:$HOME/.dotfiles/bin:/usr/local/mysql/bin:$HOME/.rvm/bin:$HOME/.local/lib/aws/bin/"
 
 ### RVM: Ruby Version Manager
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
