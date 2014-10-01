@@ -1,7 +1,7 @@
 dot dotfiles
 =============
 
-Dann's dotfiles.  Make yourself at home.
+Danne's dotfiles.  Make yourself at home.
 
 Installation
 ------------
@@ -23,7 +23,7 @@ Next, RVM is installed with:
 
 Once you have RVM available, clone this repository into your new home folder
 
-	$ git clone https://danndalf@github.com/danndalf/.dotfiles.git
+	$ git clone https://linenoise@github.com/linenoise/.dotfiles.git
 
 Next, link the freshly cloned dotlings into their new homes
 
@@ -36,7 +36,7 @@ Maintenance
 
 Before making any changes to the dotfile collection on github, you'll need to setup your SSH keys to be able to read from the repository.  Once this is in place, change from the read-only HTTP url to the read/write GIT url with the following:
 
-	$ git remote set-url origin git://github.com/danndalf/.dotfiles.git
+	$ git remote set-url origin git://github.com/linenoise/.dotfiles.git
 
 Once this is in place, you can make any changes you like to the dotfile repository:
 
