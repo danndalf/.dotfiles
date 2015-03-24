@@ -3,7 +3,7 @@
 	email = danne@stayskal.com
 [core]
 	quotepath = false
-	excludesfile = /Users/dann/.gitignore_global
+	excludesfile = /Users/danne/.gitignore_global
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -29,3 +29,6 @@
 	added = cyan
 	changed = green
 	untracked = red
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
