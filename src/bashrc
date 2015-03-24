@@ -87,18 +87,18 @@ function make_prompt {
 PROMPT_COMMAND=make_prompt
 
 ### PATH: The path that can be traversed is not the eternal path.
-export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts:$HOME/.dotfiles/bin:/usr/local/mysql/bin:$HOME/.rvm/bin:$HOME/.local/lib/aws/bin/"
+export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$HOME/Scripts:$HOME/.dotfiles/bin:/usr/local/mysql/bin:$HOME/.local/lib/aws/bin:$HOME/.rvm/bin:/usr/local/sbin"
 
 ### RVM: Ruby Version Manager
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 ### RVM + OSX: Various hacks to make RVM work in OS X 10.8+
-OS=`uname`
-if [ "$OS" == "Darwin" ]; then
-	cd .
-	export CC=/usr/bin/gcc-4.2
-	export DYLD_LIBRARY_PATH="/usr/local/mysql/lib:$DYLD_LIBRARY_PATH"
-fi
+#OS=`uname`
+#if [ "$OS" == "Darwin" ]; then
+#	cd .
+#  export CC=/usr/bin/gcc-4.2
+#	export DYLD_LIBRARY_PATH="/usr/local/mysql/lib:$DYLD_LIBRARY_PATH"
+#fi
 
 ### SSH: Quick application of SSH keys to a new host
 apply_ssh() {
@@ -116,6 +116,6 @@ export PATH=$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools
 export VAGRANT_LOG=warn
 
 ### POSTGRESQL
-export PATH=${PATH}:/usr/local/Cellar/postgresql/9.3.2/bin
-export DYLD_LIBRARY_PATH=/usr/local/Cellar/postgresql/9.3.2/lib:$DYLD_LIBRARY_PATH
+#export PATH=${PATH}:/usr/local/Cellar/postgresql/9.3.2/bin
+#export DYLD_LIBRARY_PATH=/usr/local/Cellar/postgresql/9.3.2/lib:$DYLD_LIBRARY_PATH
 
