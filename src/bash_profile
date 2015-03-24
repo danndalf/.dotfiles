@@ -4,3 +4,4 @@
 
 ### Needed to make tmux work with bashrc when RVM is installed
 . ~/.bashrc
+. ~/.profile
