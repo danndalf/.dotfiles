@@ -1,9 +1,6 @@
-[user]
-	name = Danne Stayskal
-	email = danne@stayskal.com
 [core]
 	quotepath = false
-	excludesfile = /Users/danne/.gitignore_global
+	excludesfile = $HOME/.gitignore_global
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
