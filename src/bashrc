@@ -57,21 +57,21 @@ if [ `uname` == 'Linux' ]; then
     alias grep='grep --color=auto'
 	fi
 fi
+alias ll='ls -ltAhr'
 
 # TABS: Enable tab completion features if the host supports them
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+## host local completions, e.g. Homebrew
+if [ -d /usr/local/etc/bash_completion.d ] && ! shopt -oq posix; then
+    for COMPLETE in /usr/local/etc/bash_completion.d/*;do
+			source $COMPLETE
+		done
+fi
 
 ### PROMPT: A fancy prompt for fancy apes, for there are no fancier apes than we.
 function make_prompt {
-	
-	### When root, show username and host in red
-	if [[ $EUID -ne 0 ]]; then
-		WARN="${WHITE}"
-	else
-		WARN="${RED}"
-	fi
 	
 	### Show if we ave a nonzero exit status from the previous command
 	EXITSTATUS="$?"
@@ -79,6 +79,13 @@ function make_prompt {
 		STATUS=""
 	else
 		STATUS="${RED}ERR $EXITSTATUS\n"
+	fi
+	
+	### When root, show username and host in red
+	if [[ $EUID -ne 0 ]]; then
+		WARN="${WHITE}"
+	else
+		WARN="${RED}"
 	fi
 	
 	PS1="${STATUS}${WHITE}${WARN}\u@\h${WHITE}:${BLUE}\W ${RESET}\$ "
@@ -100,6 +107,9 @@ export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$H
 #	export DYLD_LIBRARY_PATH="/usr/local/mysql/lib:$DYLD_LIBRARY_PATH"
 #fi
 
+### Install Perl modules in HOME with local::lib
+[ $SHLVL -eq 1 ] && eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
+
 ### SSH: Quick application of SSH keys to a new host
 apply_ssh() {
 	/usr/bin/ssh $1 "mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chmod go-rwx ~/.ssh ~/.ssh/authorized_keys && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_*.pub
@@ -118,4 +128,9 @@ export VAGRANT_LOG=warn
 ### POSTGRESQL
 #export PATH=${PATH}:/usr/local/Cellar/postgresql/9.3.2/bin
 #export DYLD_LIBRARY_PATH=/usr/local/Cellar/postgresql/9.3.2/lib:$DYLD_LIBRARY_PATH
+
+### AWSCLI
+export PATH=${PATH}:/usr/local/aws/bin
+complete -C aws_completer aws
+
 
