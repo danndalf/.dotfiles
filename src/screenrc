@@ -1,0 +1,17 @@
+#setenv SSH_AUTH_SOCK "/tmp/ssh-agent-$USER-screen"
+termcapinfo xterm 'bc@:bs@'
+startup_message off # Turn off the splash screen
+defscrollback 30000 # occupies resident mem
+termcapinfo xterm* ti@:te@
+activity '^GActivity monitor %n %t (%c:%s)'
+defmonitor on
+vbell off
+shell bash
+defutf8 on
+#bind ^x
+bind ^x resize max
+#bind x
+bind x resize min
+bind - resize -11
+bind = resize +11
+bind a focus
