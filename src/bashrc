@@ -11,9 +11,6 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 shopt -s histappend
 
-# LINE EDITING
-set -o vi # Vi because Emacs keys collide with screen
-
 # DIMENSIONS: Update LINES and COLUMNS after each command if necessary
 shopt -s checkwinsize
 
