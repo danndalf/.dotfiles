@@ -1,6 +1,16 @@
 #
-# .bashrc: executed by bash(1) for non-login shells.
-#
+# .bashrc: executed by bash(1) for non-login (interactive) shells and 
+#  a place for sane defaults
+# 
+
+# stop parent xtrace (debug)
+set +x
+
+# debug
+#set -x;printf 'DEBUG: %s\n' "$_ -$- $*"
+
+# return to parent process unless BASH is interactive (tty attached)
+[[ $- = *i* ]] || return
 
 # LANGUAGE: US English, UTF-8 default
 export LANG=en_US.UTF-8
@@ -133,4 +143,15 @@ export VAGRANT_LOG=warn
 export PATH=${PATH}:/usr/local/aws/bin
 complete -C aws_completer aws
 
+### CPAN 
+export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH
+
+# Juice: a place for personalization beyond the scope of the public repository
+#  where this dotfile lives (override the above if not appropriate for a pull
+#  request)
+MYJUICE=~/.juice
+[[ -r "$MYJUICE" ]] && source "$MYJUICE"
+
+# stop xtrace (debug)
+set +x
 

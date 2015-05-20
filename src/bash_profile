@@ -1,7 +1,21 @@
+###
+##
+# .bash_profile: sourced by /etc/bashrc for login (non-interactive) shells.
 
-### Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
+# stop parent xtrace (debug)
+set +x
 
-### Needed to make tmux work with bashrc when RVM is installed
-. ~/.bashrc
-. ~/.profile
+# debug
+#set -x;printf 'DEBUG: %s\n' "$_ -$- $*"
+
+# return to parent process if BASH is interactive (tty attached), unless this
+# is OS X in which case source the interactive runcom (.bashrc)
+if [[ "$(uname)" == "Darwin" ]];then
+	source ~/.bashrc
+else 
+	[[ $- == *i* ]] && return
+fi
+
+# stop xtrace (debug)
+set +x
+
