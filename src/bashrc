@@ -117,8 +117,16 @@ export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$H
 #	export DYLD_LIBRARY_PATH="/usr/local/mysql/lib:$DYLD_LIBRARY_PATH"
 #fi
 
-### Install Perl modules in HOME with local::lib
-[ $SHLVL -eq 1 ] && eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
+### Do things that should not be done inside nested instances of the shell,
+###  only the parent instance of BASH
+[ $SHLVL -eq 1 ] && {
+
+    # Allow local::lib to set env vars to install Perl modules in user homedir
+    eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
+
+    # Try to load PGP default identity for SSH auth if Monkeysphere is available
+		[[ "$(monkeysphere v 2>/dev/null)" =~ ^Monkeysphere\ [.0-9]+$ ]] && monkeysphere subkey-to-ssh-agent
+}
 
 ### SSH: Quick application of SSH keys to a new host
 apply_ssh() {
