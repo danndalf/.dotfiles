@@ -11,9 +11,9 @@ set +x
 # return to parent process if BASH is interactive (tty attached), unless this
 # is OS X in which case source the interactive runcom (.bashrc)
 if [[ "$(uname)" == "Darwin" ]];then
-	source ~/.bashrc
-else 
-	[[ $- == *i* ]] && return
+    source ~/.bashrc
+elif [[ $- == *i* ]];then
+    return
 fi
 
 # stop xtrace (debug)
