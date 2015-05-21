@@ -10,7 +10,7 @@ set +x
 #set -x;printf 'DEBUG: %s\n' "$_ -$- $*"
 
 # return to parent process unless BASH is interactive (tty attached)
-[[ $- = *i* ]] || return
+[[ $- == *i* ]] || return
 
 # LANGUAGE: US English, UTF-8 default
 export LANG=en_US.UTF-8
