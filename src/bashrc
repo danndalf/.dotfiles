@@ -1,6 +1,16 @@
 #
-# .bashrc: executed by bash(1) for non-login shells.
-#
+# .bashrc: executed by bash(1) for non-login (interactive) shells and 
+#  a place for sane defaults
+# 
+
+# stop parent xtrace (debug)
+set +x
+
+# debug
+#set -x;printf 'DEBUG: %s\n' "$_ -$- $*"
+
+# return to parent process unless BASH is interactive (tty attached)
+[[ $- == *i* ]] || return
 
 # LANGUAGE: US English, UTF-8 default
 export LANG=en_US.UTF-8
@@ -107,8 +117,16 @@ export PATH="/usr/local/bin:/var/lib/gems/2.8/bin:/var/lib/gems/1.8/bin:$PATH:$H
 #	export DYLD_LIBRARY_PATH="/usr/local/mysql/lib:$DYLD_LIBRARY_PATH"
 #fi
 
-### Install Perl modules in HOME with local::lib
-[ $SHLVL -eq 1 ] && eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
+### Do things that should not be done inside nested instances of the shell,
+###  only the parent instance of BASH
+[ $SHLVL -eq 1 ] && {
+
+    # Allow local::lib to set env vars to install Perl modules in user homedir
+    eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
+
+    # Try to load PGP default identity for SSH auth if Monkeysphere is available
+		[[ "$(monkeysphere v 2>/dev/null)" =~ ^Monkeysphere\ [.0-9]+$ ]] && monkeysphere subkey-to-ssh-agent
+}
 
 ### SSH: Quick application of SSH keys to a new host
 apply_ssh() {
@@ -133,4 +151,15 @@ export VAGRANT_LOG=warn
 export PATH=${PATH}:/usr/local/aws/bin
 complete -C aws_completer aws
 
+### CPAN 
+export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH
+
+# Juice: a place for personalization beyond the scope of the public repository
+#  where this dotfile lives (override the above if not appropriate for a pull
+#  request)
+MYJUICE=~/.juice
+[[ -r "$MYJUICE" ]] && source "$MYJUICE"
+
+# stop xtrace (debug)
+set +x
 

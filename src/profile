@@ -4,6 +4,12 @@
 # see /usr/share/doc/bash/examples/startup-files for examples.
 # the files are located in the bash-doc package.
 
+# stop xtrace (debug)
+set +x
+
+# debug
+#set -x;printf 'DEBUG: %s\n' "$_ -$- $*"
+
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
@@ -20,3 +26,7 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
+
+# stop xtrace (debug)
+set +x
+
